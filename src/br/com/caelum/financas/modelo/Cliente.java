@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -13,9 +14,10 @@ public class Cliente {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer Id;
 	private String nome;
-	private String proficao;
+	private String profissao;
 	private String endereco;
 	
+	@JoinColumn(unique=true)
 	@OneToOne
 	private Conta conta;
 	
@@ -31,17 +33,23 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getProficao() {
-		return proficao;
+	public String getProfissao() {
+		return profissao;
 	}
-	public void setProficao(String proficao) {
-		this.proficao = proficao;
+	public void setProfissao(String proficao) {
+		this.profissao = proficao;
 	}
 	public String getEndereco() {
 		return endereco;
 	}
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+	public Conta getConta() {
+		return conta;
+	}
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 }
