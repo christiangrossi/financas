@@ -20,7 +20,7 @@ public class TesteFuncoesJPQL {
 				Conta conta = new Conta();
 				conta.setId(2);
 
-				String jpql = "select avg(m.valor) from Movimentacao m where m.conta = :pConta "
+				String jpql = "select distinct avg(m.valor) from Movimentacao m where m.conta = :pConta "
 						+ "and m.tipo = :pTipo"
 						+ " group by m.data";
 
@@ -29,8 +29,10 @@ public class TesteFuncoesJPQL {
 				query.setParameter("pTipo", TipoMovimentacao.SAIDA);
 
 				List<Double> medias =  query.getResultList();
-				System.out.println("media:" + medias.get(0));
-				System.out.println("media:" + medias.get(1));
+				for (Double media : medias) {
+					System.out.println("a media: " + media);
+				}
+				
 				em.getTransaction().commit();
 				
 				
