@@ -1,16 +1,11 @@
 package br.com.caelum.financas.teste;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
-import br.com.caelum.financas.modelo.Categoria;
 import br.com.caelum.financas.modelo.Conta;
-import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 import br.com.caelum.financas.util.JPAUtil;
 
@@ -27,15 +22,15 @@ public class TesteFuncoesJPQL {
 
 				String jpql = "select avg(m.valor) from Movimentacao m where m.conta = :pConta "
 						+ "and m.tipo = :pTipo"
-						+ " order by m.valor desc";
+						+ " group by m.data";
 
-				Query query = em.createQuery(jpql);
+				TypedQuery<Double> query = em.createQuery(jpql, Double.class);
 				query.setParameter("pConta", conta);
-				query.setParameter("pTipo", TipoMovimentacao.ENTRADA);
+				query.setParameter("pTipo", TipoMovimentacao.SAIDA);
 
-				Double media = (Double) query.getSingleResult();
-				System.out.println("A media é: " + media);
-				
+				List<Double> medias =  query.getResultList();
+				System.out.println("media:" + medias.get(0));
+				System.out.println("media:" + medias.get(1));
 				em.getTransaction().commit();
 				
 				
