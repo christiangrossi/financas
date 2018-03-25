@@ -25,11 +25,7 @@ public class TesteFuncoesJPQL {
 				Conta conta = new Conta();
 				conta.setId(2);
 
-				String jpql = "select sum(m.valor) from Movimentacao m where m.conta = :pConta "
-						+ "and m.tipo = :pTipo"
-						+ " order by m.valor desc";
-				
-				String jpql2 = "select sum(m.valor) from Movimentacao m where m.conta = :pConta "
+				String jpql = "select avg(m.valor) from Movimentacao m where m.conta = :pConta "
 						+ "and m.tipo = :pTipo"
 						+ " order by m.valor desc";
 
@@ -37,8 +33,8 @@ public class TesteFuncoesJPQL {
 				query.setParameter("pConta", conta);
 				query.setParameter("pTipo", TipoMovimentacao.ENTRADA);
 
-				BigDecimal soma = (BigDecimal) query.getSingleResult();
-				System.out.println("A soma é: " + soma);
+				Double media = (Double) query.getSingleResult();
+				System.out.println("A media é: " + media);
 				
 				em.getTransaction().commit();
 				
